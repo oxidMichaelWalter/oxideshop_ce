@@ -176,4 +176,65 @@ final class ArticleTest extends IntegrationTestCase
             'With invalid From/to' => [$future, $past, false],
         ];
     }
+
+    public static function productLowStockDataProvider(): array
+    {
+        return [
+            'Product in low stock: Shop limit reached, Product limit undefined' => [5, 0.0, 10, 1],
+            'Product in low stock: Shop limit exceeded, Product limit ignored' => [11, 20.0, 10, 1],
+            'Product in low stock: Product limit reached' => [5, 10.0, 0, 1],
+            'Product in stock' => [5, 0.0, 3, 0],
+            'Product not in stock' => [-1, 0.0, 0, -1]
+        ];
+    }
+
+    #[DataProvider('productLowStockDataProvider')]
+    public function testProductLowStock(
+        int $productStock,
+        float $productLowStockLimit,
+        int $shopLowStockLimit,
+        int $stockStatus
+    ): void {
+        Registry::getConfig()->setConfigParam('blUseStock', true);
+        Registry::getConfig()->setConfigParam('sStockWarningLimit', $shopLowStockLimit);
+
+        $product = oxNew(Article::class);
+        $product->assign([
+            'oxarticles__oxstock' => $productStock,
+            'oxarticles__oxremindamount' => $productLowStockLimit,
+            'oxarticles__oxparentid' => ''
+        ]);
+
+        $this->assertEquals($stockStatus, $product->getStockStatus());
+    }
+
+    public function testProductInStock(): void
+    {
+        Registry::getConfig()->setConfigParam('blUseStock', true);
+        Registry::getConfig()->setConfigParam('sStockWarningLimit', 3);
+
+        $product = oxNew(Article::class);
+        $product->assign([
+            'oxarticles__oxstock' => 5,
+            'oxarticles__oxremindamount' => 0.0,
+            'oxarticles__oxparentid' => ''
+        ]);
+
+        $this->assertEquals(0, $product->getStockStatus());
+    }
+
+    public function testProductOutStock(): void
+    {
+        Registry::getConfig()->setConfigParam('blUseStock', true);
+        Registry::getConfig()->setConfigParam('sStockWarningLimit', 0);
+
+        $product = oxNew(Article::class);
+        $product->assign([
+            'oxarticles__oxstock' => -1,
+            'oxarticles__oxremindamount' => 0.0,
+            'oxarticles__oxparentid' => ''
+        ]);
+
+        $this->assertEquals(-1, $product->getStockStatus());
+    }
 }

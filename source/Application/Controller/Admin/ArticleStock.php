@@ -99,11 +99,6 @@ class ArticleStock extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
         $oArticle->setLanguage(0);
 
-        // checkbox handling
-        if (!$oArticle->oxarticles__oxparentid->value && !isset($aParams['oxarticles__oxremindactive'])) {
-            $aParams['oxarticles__oxremindactive'] = 0;
-        }
-
         $oArticle->assign($aParams);
 
         //tells to article to save in different language

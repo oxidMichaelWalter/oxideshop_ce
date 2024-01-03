@@ -10,6 +10,7 @@ namespace OxidEsales\EshopCommunity\Core;
 use OxidEsales\Eshop\Core\Exception\FileException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Str;
+use OxidEsales\EshopCommunity\Core\Exception\ShopException;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Path\ModuleAssetsPathResolverBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
 use OxidEsales\Facts\Facts;
@@ -984,24 +985,26 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
         return $sParams;
     }
 
-    /**
-     * Returns config param "blStockOnDefaultMessage" value
-     *
-     * @return string
-     */
     public function getStockOnDefaultMessage()
     {
         return Registry::getConfig()->getConfigParam('blStockOnDefaultMessage');
     }
 
-    /**
-     * Returns config param "blStockOnDefaultMessage" value
-     *
-     * @return string
-     */
     public function getStockOffDefaultMessage()
     {
         return Registry::getConfig()->getConfigParam('blStockOffDefaultMessage');
+    }
+
+    /**
+     * @throws \OxidEsales\EshopCommunity\Core\Exception\ShopException
+     */
+    public function getStockLowDefaultMessage(): bool
+    {
+        $lowStockMessage = Registry::getConfig()->getConfigParam('blStockLowDefaultMessage');
+        if ($lowStockMessage === null){
+            throw new ShopException('Low stock default message is not configured.');
+        }
+        return $lowStockMessage;
     }
 
     /**

@@ -10,6 +10,7 @@
 - Dependencies between modules feature is introduced
 - PHPUnit v10 support
 - Time activated products have different status icons in the product list
+- Set custom product low stock label 
 
 ### Deprecated
 - Deprecate console classes from the Internal namespace: `Executor`, `ExecutorInterface`, `CommandsProvider`, `CommandsProviderInterface`
