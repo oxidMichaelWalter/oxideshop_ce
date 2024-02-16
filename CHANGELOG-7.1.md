@@ -22,6 +22,7 @@ template extension resolving is already performed in `TemplateRenderer`
 ### Fixed
 - Wrong property "_oUserData" used in ContactController [PR-918](https://github.com/OXID-eSales/oxideshop_ce/pull/918)
 - Can't use dot character for template file names
+- User registration in the Private Sales mode
 
 ### Changed
 -  Executing `oe-console` command with an invalid `shop-id` value will be interrupted
