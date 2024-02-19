@@ -874,21 +874,21 @@ class UserComponent extends \OxidEsales\Eshop\Core\Controller\BaseController
         }
     }
 
-    private function getShippingAddress(): array
+    private function getShippingAddress(): ?array
     {
         $shippingAddress = $this->getDelAddressData();
         $shippingAddress = $this->cleanAddress($shippingAddress, oxNew(UserShippingAddressUpdatableFields::class));
         return $this->trimAddress($shippingAddress);
     }
 
-    private function getBillingAddress(): array
+    private function getBillingAddress(): ?array
     {
         $billingAddress = Registry::getRequest()->getRequestParameter('invadr');
         $billingAddress = $this->cleanAddress($billingAddress, oxNew(UserUpdatableFields::class));
         if ($billingAddress && is_array($billingAddress)) {
             $billingAddress = $this->removeNonAddressFields($billingAddress);
         }
-        return (array) $this->trimAddress($billingAddress);
+        return $this->trimAddress($billingAddress);
     }
 
     private function removeNonAddressFields(array $addressFormData): array
