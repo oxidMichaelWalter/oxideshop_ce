@@ -8,7 +8,7 @@ prepare_shop:
           "require": {
               "oxid-esales/twig-component": "dev-b-7.1.x",
               "oxid-esales/twig-admin-theme": "dev-b-7.1.x",
-              "oxid-esales/apex-theme": "dev-b-7.1.x-remove_non_aria_role_attributes-OXDEV-7637"
+              "oxid-esales/apex-theme": "dev-b-7.1.x"
           },
           "require-dev": {
               "oxid-esales/codeception-page-objects": "dev-b-7.1.x",
