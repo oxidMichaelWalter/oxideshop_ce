@@ -2,8 +2,6 @@
 # Only diverging settings are defined here
 
 prepare_shop:
-  matrix: *matrix
-  git: *git
   composer:
     transform: |
       {
